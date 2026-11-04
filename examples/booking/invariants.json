@@ -1,0 +1,31 @@
+{
+  "system": "booking-service",
+  "invariants": [
+    {
+      "id": "no-double-booking",
+      "statement": "One resource cannot have overlapping confirmed bookings.",
+      "owner": "booking-service",
+      "scope": "confirmed bookings for the same resource",
+      "violation": "Two overlapping confirmed intervals exist for one resource.",
+      "check": {
+        "type": "concurrency-test",
+        "command": "python -m unittest tests.test_booking_concurrency"
+      },
+      "evidence": "CI test result",
+      "review_on": ["schema-change", "storage-change", "booking-write-change"]
+    },
+    {
+      "id": "idempotent-retry",
+      "statement": "Repeating an accepted request with the same key cannot create a second booking.",
+      "owner": "booking-service",
+      "scope": "reservation write API",
+      "violation": "A repeated key creates another booking or changes the accepted payload.",
+      "check": {
+        "type": "integration-test",
+        "command": "python -m unittest tests.test_idempotency"
+      },
+      "evidence": "CI test result",
+      "review_on": ["api-change", "retry-policy-change", "storage-change"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "short-stable-id",
+  "statement": "A precise property the system must preserve.",
+  "owner": "team-or-component",
+  "scope": "where the property applies",
+  "violation": "An observable state that proves the property was broken.",
+  "check": {
+    "type": "test-or-monitor",
+    "command": "command that produces evidence"
+  },
+  "evidence": "where the result is recorded",
+  "review_on": [
+    "events that require this invariant to be reviewed"
+  ]
+}

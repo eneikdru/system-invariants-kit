@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dmitryefremov.com/schemas/invariant.schema.json",
+  "title": "System invariant collection",
+  "type": "object",
+  "required": ["system", "invariants"],
+  "properties": {
+    "system": {"type": "string", "minLength": 1},
+    "invariants": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "owner", "scope", "violation", "check", "evidence", "review_on"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "statement": {"type": "string", "minLength": 1},
+          "owner": {"type": "string", "minLength": 1},
+          "scope": {"type": "string", "minLength": 1},
+          "violation": {"type": "string", "minLength": 1},
+          "check": {
+            "type": "object",
+            "required": ["type", "command"],
+            "properties": {
+              "type": {"type": "string", "minLength": 1},
+              "command": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          },
+          "evidence": {"type": "string", "minLength": 1},
+          "review_on": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
